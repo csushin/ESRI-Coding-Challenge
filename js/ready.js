@@ -58,7 +58,7 @@ $(document).ready(function(){
     // create parameter select boxes
     $.ajax({
     	type: "POST",
-        url: "http://localhost:3000/getData",
+        url: "/getData",
         contentType: 'application/json',
         data: {},
         error: function(err){
