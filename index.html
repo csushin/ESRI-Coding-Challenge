@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>ESRI - Coding Challenge</title>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+	<style>
+	html, body, .mainContainer
+	{
+	    text-align: left;
+	    font-family: 'Open Sans', sans-serif;
+	    width: 100%;
+		height:100%;
+	}
+
+	#map{
+		width: 47%;
+		height: 98%;
+		padding-left: 10px;
+		padding-right: 5px;
+		/*border: 1px solid;*/
+		float: left;
+	}
+
+	#visualization{
+		padding-left: 5px;
+		padding-right: 10px;
+		height: 98%;
+		width: 49%;
+		float: right;
+		/*border: 1px solid;*/
+	}
+
+	#linechart{
+		height: 50%;
+		border: 1px solid;
+	}
+
+	#lct-controls-container{
+		height:13%; 
+		width: 100%;
+	}
+
+	#lct-main-container{
+		/*overflow-y: auto; */
+		width:  100%; 
+		height: 87%;
+	}
+
+	.lct-axis path, 
+	.lct-axis line{
+		fill: none;
+	    stroke: #000;
+	    shape-rendering: crispEdges;
+	}
+	.lct-axis text {
+	    fill: #000;
+	}
+	.lct-axis .tick line {
+	    stroke: rgba(0, 0, 0, 0.1);
+	}
+	.lct-range{
+		fill: rgba(230, 230, 255, 0.8);
+  		stroke: rgba(216, 216, 255, 0.8);
+	}
+	.lct-meanline {
+	    fill: none;
+	    stroke: #000;
+	    stroke-width: 2;
+	}
+	.lct-upperline{
+		fill: none;
+		stroke: #e41a1c;
+		stroke-width: 3;
+	}
+	.lct-lowerline{
+		fill: none;
+		stroke: #377eb8;
+		stroke-width: 3;
+	}
+	.lct-image-border{
+		fill: transparent;
+	  	stroke: transparent;
+	  	shape-rendering: crispEdges;
+	}
+	.lct-image-border:hover {
+	  	stroke: black;
+	}
+
+	@media (max-width: 300px) {
+    	body{font-size: 7px;}
+    	#map{width: 100%;}
+    	#visualization{width: 100%;}
+	}
+
+	@media (max-width: 800px) {
+    	body{font-size: 10px;}
+    	#map{width: 100%;}
+    	#visualization{width: 100%;}
+	}
+
+	@media (max-width: 1200px) {
+	    body{font-size: 14px;}
+	}
+
+
+	</style>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="js/LineChart.js"></script>
+	<script type="text/javascript" src="js/DrawRegions.js"></script>
+	<script type="text/javascript" src="js/TimeSlider.js"></script>
+
+</head>
+<body>
+<!-- <div class='mainContainer'> -->
+	<div id='map'></div>
+	<div id='visualization'>
+		<div id='linechart'>
+			<div id="lct-controls-container">
+				<label>
+					Category:
+					<select id='lct-parentkey-select' name="lct-pkey"></select>
+				</label>
+				<br>
+				<label>
+					Sub-Category:
+					<select id="lct-childkey-select" name="lct-ckey"></select>
+				</label>
+				<input type="button" id="lct-add-btn" value="Render">
+			</div>
+			<div id="lct-main-container"></div>
+		</div>
+		<div id='aa'></div>
+	</div>
+<!-- </div> -->
+
+<script type="text/javascript">
+var dojoConfig = { isDebug: true };
+var dojoConfig = {
+    parseOnLoad: true,
+    packages: [{
+      "name": "modules",
+      "location": location.origin + location.pathname.replace(/\/[^/]+$/, '')
+    }]
+};
+</script>
+<script src="http://js.arcgis.com/3.13/"></script>
+<script>
+
+</script>
+<script type="text/javascript" src="/js/ready.js"></script>
+</body>
+</html>
