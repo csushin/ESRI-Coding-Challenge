@@ -7,7 +7,7 @@ define([
     "esri/geometry/Point",
     "esri/geometry/webMercatorUtils",
     "esri/layers/GraphicsLayer",
-    "http://d3js.org/d3.v3.min.js"
+    "https://d3js.org/d3.v3.min.js"
   ],
   function(
     declare,
