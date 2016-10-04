@@ -1,4 +1,4 @@
-// credit to https://github.com/chelm/esri-d3. Minor modifications from Xing Liang.
+// Credit to https://github.com/chelm/esri-d3. Minor modifications from Xing Liang.
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
@@ -75,6 +75,7 @@ define([
     _addLegend: function(){
       var legend = d3.select("#"+this.legend);
         legend.style('z-index', 100)
+        .style('padding-right', '10px')
         .style('right', '10px')
         .style('bottom', '10px')
         .style('position', 'absolute')
@@ -136,8 +137,6 @@ define([
       this._connects = [];
       this._connects.push( dojo.connect(this._map, "onPan", this, this._moveLayer) );
       this._connects.push( dojo.connect( this._map, "onZoomEnd", this, this._reset ) );
-      // this._connects.push( dojo.connect( this._map, "onZoom", this, this._monitorZoom ) );
-      // this._connects.push( dojo.connect( this._map, "onPanEnd", this, this._moveLayer ) );
     },
 
     _monitorZoom: function(){
