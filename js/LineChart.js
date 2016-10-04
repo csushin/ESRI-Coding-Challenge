@@ -51,23 +51,10 @@ function udpateLineChart(){
 		// dynamically name the id so that we can get the handler of that div and remove it
 		// var containerId = "lct-container-"+linecharts.charts.length;
 		var containerId = "lct-main-container";
-		// inser the div
-		// $("#lct-main-container").append($("<div></div>").attr("id", containerId).css("width", width+'px').css("height", height+'px').css("float", "left"));
 		// initialize the parameters in the line chart and return the object as the handler so that we can play with it in future
 		var lct = new LineChart(parentkey, childKey, containerId, width, height, timeseries, linecharts.years, linecharts.regionNames, metric);
 		// begin to draw the line chart
 		lct.drawLineChart();
-		// window.addEventListener('resize', function(){
-		// 	console.log('resizing..');
-		// 	var width = $("#lct-main-container").width()*0.95;
-		// 	var height = $("#lct-main-container").height()*0.95;
-		// 	$("#"+lct.containerId).width(width);
-		// 	$("#"+lct.containerId).height(height);
-		// 	d3.select("#"+lct.containerId).select('svg').attr('width', width);
-		// 	d3.select("#"+lct.containerId).select('svg').attr('height', height);
-		// });
-		// push it to our global variables
-		// linecharts.charts.push(lct);
 }
 
 

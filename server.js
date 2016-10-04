@@ -19,7 +19,7 @@ app.post('/getData', function(req, res){
 	var datacontent = JSON.parse(fs.readFileSync(filepath));
 	var geopath = __dirname+'/data/gcam_32_master.geojson';
 	var geocontent = JSON.parse(fs.readFileSync(geopath));
-	var regionpath = __dirname+'/data/scenario_1507.geojson';
+	var regionpath = __dirname+'/data/scenario_757.geojson';
 	var regioncontent = JSON.parse(fs.readFileSync(regionpath));
 	res.send({data: JSON.stringify(datacontent), geo: JSON.stringify(geocontent), region: JSON.stringify(regioncontent)});
 });

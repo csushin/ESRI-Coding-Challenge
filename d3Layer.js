@@ -230,7 +230,6 @@ define([
         this._paths()
         .attr(a.key, a.value)
         .on('mouseover', (d, i)=>{
-          // d3.select("#region-"+d.properties["REGION_NAME"]).style("stroke-width", "5");
           if(this.regionValues!=null){
             var data = this.regionValues[d.id].queries;
             if(data!=null){
