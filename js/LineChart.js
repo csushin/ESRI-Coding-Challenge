@@ -1,14 +1,12 @@
 //prepare the line chart: 1) inserting the valid output types into the select box. 2) validating the input
 function prepareLineChart(parentKeys, childKeys){
-	//empty the container
-	// $("#lct-main-container").empty();
-		//dynamically load the parent keys from the data user selected
+	// dynamically load the parent keys from the data user selected
 	$.each(parentKeys, function(index, value){
 		$("#lct-parentkey-select").append($("<option ></option>").attr("value", index).text(value));
 	});
 	$("#lct-parentkey-select option[value=0]").attr("selected", "selected");//set the first element in the parentKeys as the default value
 
-	//set childKeys of the first parent key as the default value
+	// set childKeys of the first parent key as the default value
 	$.each(childKeys[parentKeys[0]], function(index, value){
 		$("#lct-childkey-select").append($("<option></option>").attr("value", index).text(value));
 	});

@@ -45,7 +45,7 @@ define([
 
       this._path = options.path || d3.geo.path();
       this.path = this._path.projection( self._project );
-    
+      this.changefiles = false;
       // load features
       this._load();
     },
@@ -66,16 +66,17 @@ define([
           return parseFloat(d.queries[this.parentKey][this.childKey][this.yearInd]);
       })
       this.scales = d3.range(this.min, this.max, (this.max-this.min)/this.colors.length);
-      this.colormapping = d3.scale.quantile().domain(this.scales).range(this.colors)
-      this._reset();
+      this.colormapping = d3.scale.quantile().domain(this.scales).range(this.colors);
       this._addLegend();
+      this.changefiles = true;
+      this._redrawColor();
     },
 
     _addLegend: function(){
       var legend = d3.select("#"+this.legend);
         legend.style('z-index', 100)
-        .style('right', 0)
-        .style('bottom', 0)
+        .style('right', '10px')
+        .style('bottom', '10px')
         .style('position', 'absolute')
         .style('opacity', '0.8')
         .style('border-radius', '7px')
@@ -133,9 +134,19 @@ define([
 
     _bind: function(map){
       this._connects = [];
-      // this._connects.push( dojo.connect(this._map, "onPan", this, this._reset) );
+      this._connects.push( dojo.connect(this._map, "onPan", this, this._moveLayer) );
       this._connects.push( dojo.connect( this._map, "onZoomEnd", this, this._reset ) );
-      this._connects.push( dojo.connect( this._map, "onPanEnd", this, this._reset ) );
+      // this._connects.push( dojo.connect( this._map, "onZoom", this, this._monitorZoom ) );
+      // this._connects.push( dojo.connect( this._map, "onPanEnd", this, this._moveLayer ) );
+    },
+
+    _monitorZoom: function(){
+      this.lastZoom = true;
+    },
+
+    _moveLayer: function(){
+      var transform = d3.select('#map_graphics_layer').attr('transform');
+      d3.select('#graphicsLayer2_layer').attr('transform', transform);
     },
 
     _project: function(x){
@@ -147,7 +158,6 @@ define([
     _render: function(){
       var self = this;
       var p = this._paths();
-    
       // if ( this.type == 'circle' ) {
 
       //   p.data( this.geojson)
@@ -253,15 +263,9 @@ define([
       this._paths().on(e.type, e.fn);
     },
 
-    // _transform: function(evt){
-    //   var self = this;
-    //   var p = this._paths();
-    //   if(p==null)  return p;
-    //   var svgParent = p[0].parentNode.parentNode;
-    //   // console.log("activated");
-    // },
-
     _reset: function(){
+      // reset the transform states of the paths
+      d3.select('#graphicsLayer2_layer').attr('transform', null);
       var self = this;
       if (this.type == 'circle'){
         this._paths()
@@ -279,6 +283,27 @@ define([
           else
             return '#fff';
         });
+
+      }
+      this.changefiles = false;
+    },
+
+    _redrawColor: function(){
+      var self = this;
+      if (this.type == 'path'){
+        this._paths().style("fill", (d, i)=>{
+          if(this.regionValues!=null){
+            var data = this.regionValues[d.id].queries;
+            if(data!=null){
+              var value = parseFloat(data[this.parentKey][this.childKey][this.yearInd]);
+              return this.colormapping(value);
+            }
+          }
+          else
+            return '#fff';
+        });
+      } else {
+        // to do for handling other svg elements
       }
     },
 
