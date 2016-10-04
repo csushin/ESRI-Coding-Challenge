@@ -75,7 +75,7 @@ define([
     _addLegend: function(){
       var legend = d3.select("#"+this.legend);
         legend.style('z-index', 100)
-        .style('padding-right', '10px')
+        .style('padding', '10px')
         .style('right', '10px')
         .style('bottom', '10px')
         .style('position', 'absolute')
