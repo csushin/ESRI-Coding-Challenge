@@ -40,6 +40,7 @@ function addTimeSlider(){
     });
 }
 
+// create the div for the legend of the map
 function addLegend(){
 	var divwidth = $("#map_root").width(),
 		divheight = $("#map_root").height()*0.1;
