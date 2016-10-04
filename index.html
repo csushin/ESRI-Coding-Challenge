@@ -120,33 +120,31 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="js/Global.js"></script>
 	<script type="text/javascript" src="js/LineChart.js"></script>
 	<script type="text/javascript" src="js/DrawRegions.js"></script>
 	<script type="text/javascript" src="js/TimeSlider.js"></script>
 
 </head>
 <body>
-<!-- <div class='mainContainer'> -->
-	<div id='map'></div>
-	<div id='visualization'>
-		<div id='linechart'>
-			<div id="lct-controls-container">
-				<label>
-					Category:
-					<select id='lct-parentkey-select' name="lct-pkey"></select>
-				</label>
-				<br>
-				<label>
-					Sub-Category:
-					<select id="lct-childkey-select" name="lct-ckey"></select>
-				</label>
-				<!-- <input type="button" id="lct-add-btn" value="Render"> -->
-			</div>
-			<div id="lct-main-container"></div>
+<div id='map'></div>
+<div id='visualization'>
+	<div id='linechart'>
+		<div id="lct-controls-container">
+			<label>
+				Category:
+				<select id='lct-parentkey-select' name="lct-pkey"></select>
+			</label>
+			<br>
+			<label>
+				Sub-Category:
+				<select id="lct-childkey-select" name="lct-ckey"></select>
+			</label>
 		</div>
-		<div id='aa'></div>
+		<div id="lct-main-container"></div>
 	</div>
-<!-- </div> -->
+	<div id='aa'></div>
+</div>
 
 <script type="text/javascript">
 var dojoConfig = { isDebug: true };

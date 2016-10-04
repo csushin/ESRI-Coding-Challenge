@@ -4,7 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const fs = require('fs');
 
-//use the current file as the default path
 app.use(express.static(__dirname));
 
 app.get('/', function(req, res){
@@ -15,12 +14,14 @@ app.get('/', function(req, res){
 app.post('/getData', function(req, res){
 	console.log('received request of the data');
 	res.contentType('json');
+	// load the data
 	var filepath =  __dirname+'/data/scenario_757.json';
 	var datacontent = JSON.parse(fs.readFileSync(filepath));
 	var geopath = __dirname+'/data/gcam_32_master.geojson';
 	var geocontent = JSON.parse(fs.readFileSync(geopath));
 	var regionpath = __dirname+'/data/scenario_757.geojson';
 	var regioncontent = JSON.parse(fs.readFileSync(regionpath));
+	// send the data back to the client.
 	res.send({data: JSON.stringify(datacontent), geo: JSON.stringify(geocontent), region: JSON.stringify(regioncontent)});
 });
 

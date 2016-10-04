@@ -1,24 +1,3 @@
-// // global variables
-var map, layer;
-var linecharts = {
-	parent: [],
-	child: [],
-	data:{},
-	charts: []
-};
-var blankImg = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';//smallest blank image
-var geofeatures;
-var tooltip = d3.select("body")
-	.append("div")
-	.style("position", "absolute")
-	.style("z-index", "10")
-	.style("background", "rgba(0, 0, 0, 0.8)")
-	.style("color", "#fff")
-	.style("visibility", "hidden");
-var colors = ['rgb(255,255,178)','rgb(254,217,118)','rgb(254,178,76)','rgb(253,141,60)','rgb(240,59,32)','rgb(189,0,38)'];
-var regionValues;
-var legendDivName = 'legend';
-
 $(document).ready(function(){
     // draw the shapefiles
     require([
@@ -33,7 +12,6 @@ $(document).ready(function(){
           zoom: 4,
           basemap: "gray"
         });
-        // d3.json
         layer = new d3Layer('/data/gcam_32_master.geojson', {
           attrs: [{
             key: 'id',
@@ -51,11 +29,13 @@ $(document).ready(function(){
         });
         map.addLayer(layer);
         layer.on("load", function(lyr) {
+            // render the layers on the map
             layer._render();
+            // add the time slider on the map
             addTimeSlider();
         });
       });
-    // create parameter select boxes
+    // retrieve the data from the server
     $.ajax({
     	type: "POST",
         url: "/getData",
@@ -65,6 +45,7 @@ $(document).ready(function(){
         	alert(err);
         },
         success: function(res){
+          // retrieve the data
         	var ret = JSON.parse(res.data);
         	geofeatures = JSON.parse(res.geo);
           regionValues = JSON.parse(res.region);
@@ -76,14 +57,18 @@ $(document).ready(function(){
           linecharts.regionNames = ret.regionNames;
           var parentKeys = Object.keys(ret.data);
           var childKeys = [];
+          // extract the keys from the data
           parentKeys.reduce((prev, cur)=>{
           	prev[cur] = Object.keys(ret.data[cur]);
           	return prev;
           }, childKeys);
+          // generate the select box and its options
         	prepareLineChart(parentKeys, childKeys);
+          // create the legend div on the map
           addLegend();
         }
     });
+    // debounce the updateLineChart event
     var deb;
     window.onresize = function(){
       clearTimeout(deb);

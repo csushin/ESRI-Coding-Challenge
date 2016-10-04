@@ -49,7 +49,6 @@ function udpateLineChart(){
 		// the metric data is currently unavailable, so we leave them as undefined
 		var metric = undefined;
 		// dynamically name the id so that we can get the handler of that div and remove it
-		// var containerId = "lct-container-"+linecharts.charts.length;
 		var containerId = "lct-main-container";
 		// initialize the parameters in the line chart and return the object as the handler so that we can play with it in future
 		var lct = new LineChart(parentkey, childKey, containerId, width, height, timeseries, linecharts.years, linecharts.regionNames, metric);
@@ -58,7 +57,7 @@ function udpateLineChart(){
 }
 
 
-
+// Line Chart Class
 var LineChart = function(parentKey, childKey, containerId, width, height, data, years, regionNames, metric){
 	this.parentKey = parentKey;
 	this.childKey = childKey;
@@ -74,6 +73,7 @@ var LineChart = function(parentKey, childKey, containerId, width, height, data, 
 	this.lowerline = [];
 }
 
+// General setups for the line chart
 LineChart.prototype.drawLineChart = function (){
 	// initialize the parameters required in svg
 	$("#"+this.containerId).empty();
@@ -109,11 +109,10 @@ LineChart.prototype.drawLineChart = function (){
 
 					    return (sign==-1?'-':'')+d;});
 
+	// Create the SVG for line chart
 	var svg = d3.select("#"+this.containerId).append("svg")
 		.attr("width", this.width)
 		.attr("height", this.height)
-		// .attr("viewBox", "0 0 "+ this.width + ' ' + this.height)
-		// .attr("preserveAspectRatio", "xMidYMid meet")
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -132,6 +131,7 @@ LineChart.prototype.drawLineChart = function (){
 
 }
 
+// Add axes to the line chart
 LineChart.prototype.addAxesAndLegend = function(svg, xAxis, yAxis, margin, chartWidth, chartHeight){
 	var legendWidth = 100,
 		legendHeight = 50;
@@ -157,6 +157,7 @@ LineChart.prototype.addAxesAndLegend = function(svg, xAxis, yAxis, margin, chart
 			.text(this.metric);
 }
 
+// Draw the mean line and the area chart
 LineChart.prototype.drawPaths = function(svg, x, y, margin){
 	var that = this;
 	var range = d3.svg.area()
@@ -184,6 +185,7 @@ LineChart.prototype.drawPaths = function(svg, x, y, margin){
 		.attr("clip-path", "url(#rect-clip)");
 }
 
+// Add the animations on the circles and mean line
 LineChart.prototype.startTransition = function(svg, chartWidth, chartHeight, rectClip, x, y, margin){
 	// set the time of line chart animation
 	rectClip.transition()
@@ -231,18 +233,17 @@ LineChart.prototype.startTransition = function(svg, chartWidth, chartHeight, rec
 					this.lowerline.push(downMarker);
 				}
 			}
-			
-
+		
 		}.bind(thisobj), 110*i);// in default, the context of setTimeout is window, so we need to bind the thisobj context to the setTimeout function
 	}
 }
 
+// Connect the circles with lines which are shown with the animation and interpolated by customized functions.
 LineChart.prototype.connectMarkers = function(points, svg, x, y, className){
 	var connectionline = d3.svg.line()
 						.interpolate('basis')
 						.x(d => x(d.x))
 						.y(d => y(d.y));
-	// svg.datum(points);
 	svg.append('path')
 		.datum(points)
 		.attr('class', className)
@@ -260,7 +261,7 @@ LineChart.prototype.connectMarkers = function(points, svg, x, y, className){
 	}
 }
 
-
+// Add markers to the graph which can be either circles or small regions
 LineChart.prototype.addMarkers = function(meanVal, circle, svg, x, y, boundIndex){
 	// initialize the circle parameters
 	var r = 3,
@@ -331,7 +332,6 @@ LineChart.prototype.addMarkers = function(meanVal, circle, svg, x, y, boundIndex
           .on("mouseout", function(d){
           	return tooltip.style("visibility", "hidden");
           });
-		// socket.send('contourIMG request', {filePath: shapeFilePath, regionCode: uniqueRegionNames.join(','), lctId: containerId, index: index, boundIndex: boundIndex});
 		return 'image';
 	}
 
@@ -357,6 +357,7 @@ LineChart.prototype.addMarkers = function(meanVal, circle, svg, x, y, boundIndex
 
 }
 
+// Add axis title to the line chart
 LineChart.prototype.addTitle = function(svg, chartWidth, chartHeight, margin){
 	svg.append("text")
 		.attr("text-anchor", "middle")
